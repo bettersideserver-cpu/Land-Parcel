@@ -2024,4 +2024,22 @@ html {
 		
 	
 
+<script>
+(function () {
+  document.querySelectorAll('input[aria-label="Compare before and after"]').forEach(function (inp) {
+    var box = inp.parentElement;
+    var kids = Array.prototype.slice.call(box.children);
+    var clip = kids.find(function (c) { return c.tagName === "DIV" && c.classList.contains("overflow-hidden") && c.style.width; });
+    var line = kids.find(function (c) { return c.classList.contains("w-0.5"); });
+    var img = clip.querySelector("img");
+    function update(v) {
+      clip.style.width = v + "%";
+      img.style.width = (10000 / Math.max(v, 0.01)) + "%";
+      line.style.left = v + "%";
+    }
+    inp.addEventListener("input", function () { update(Number(inp.value)); });
+    update(Number(inp.value));
+  });
+})();
+</script>
 </body></html>
